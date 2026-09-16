@@ -1,1 +1,5 @@
-abstract final class AppRoutes {}
+abstract final class AppRoutes {
+   static const String home = '/home';
+    static const String scan = '/scan';
+     static const String discovery = '/discovery';
+}
