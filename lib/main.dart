@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish/app/router/app_router.dart';
 import 'package:nourish/core/theme/app_theme.dart';
-import 'package:nourish/features/home/presentation/pages/home_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

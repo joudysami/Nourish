@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nourish/core/theme/app_color.dart';
 class AiScannerCard extends StatelessWidget {
   const AiScannerCard({super.key, this.onScanPressed});
@@ -221,7 +222,8 @@ class _ScanProductButton extends StatelessWidget {
       width: double.infinity,
       height: 52.h,
       child: ElevatedButton(
-        onPressed: onPressed ?? () {},
+        onPressed:  () {
+context.pushNamed('scan');        },
         style: ElevatedButton.styleFrom(
           backgroundColor: colors.white,
           foregroundColor: colors.plum[800],
