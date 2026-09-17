@@ -1,11 +1,24 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish/app/router/app_router.dart';
 import 'package:nourish/core/theme/app_theme.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const NourishApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      startLocale: const Locale('en'),
+      child: const NourishApp(),
+    ),
+  );
 }
 
 class NourishApp extends StatelessWidget {
@@ -21,9 +34,11 @@ class NourishApp extends StatelessWidget {
           routerConfig: appRouter,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
         );
-      }
-        
+      },
     );
   }
 }
