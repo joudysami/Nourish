@@ -48,6 +48,8 @@ dependencies:
   flutter_bloc: ^9.1.1
   retrofit: ^4.10.0
   easy_localization: ^3.0.8
+  camera: ^0.12.1
+  image_picker: ^1.2.3
 
 dev_dependencies:
   flutter_test:

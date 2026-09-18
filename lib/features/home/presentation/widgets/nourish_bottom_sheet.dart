@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish/core/theme/app_color.dart';
+import 'package:nourish/features/scan/presentation/view_model/scan_event.dart';
+import 'package:nourish/features/scan/presentation/view_model/scan_view_model.dart';
 
-class NourishBottomSheet extends StatelessWidget {
+class NourishBottomSheet extends StatefulWidget {
   const NourishBottomSheet({
     super.key,
     required this.currentIndex,
@@ -13,6 +15,25 @@ class NourishBottomSheet extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onChanged;
   final VoidCallback? onScanPressed;
+
+  @override
+  State<NourishBottomSheet> createState() => _NourishBottomSheetState();
+}
+
+class _NourishBottomSheetState extends State<NourishBottomSheet> {
+    late final ScanViewModel _viewModel;
+      @override
+  void initState() {
+    super.initState();
+    _viewModel = ScanViewModel();
+  }
+
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +62,15 @@ class NourishBottomSheet extends StatelessWidget {
             _NavItem(
               icon: Icons.home_rounded,
               title: "Home",
-              selected: currentIndex == 0,
-              onTap: () => onChanged(0),
+              selected: widget.currentIndex == 0,
+             onTap: () => _viewModel.doEvent(ChangeTabEvent(0)),
             ),
-            _ScanNavButton(onTap: onScanPressed ?? () => onChanged(2)),
+            _ScanNavButton(onTap: widget.onScanPressed ?? () => _viewModel.doEvent(ChangeTabEvent(2))),
             _NavItem(
               icon: Icons.bookmark_border_rounded,
               title: "Discoveries",
-              selected: currentIndex == 3,
-              onTap: () => onChanged(3),
+              selected: widget.currentIndex == 3,
+              onTap: () => _viewModel.doEvent(ChangeTabEvent(3)),
             ),
           ],
         ),
@@ -63,14 +84,13 @@ class _NavItem extends StatelessWidget {
     required this.icon,
     required this.selected,
     required this.onTap,
-    required this.title,
+    required this.title, 
   });
 
   final IconData icon;
   final bool selected;
   final VoidCallback onTap;
   final String title;
-
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
@@ -80,7 +100,7 @@ class _NavItem extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(20.r),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // تضبيط المحاذاة رأسياً
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               icon,
@@ -127,10 +147,7 @@ class _ScanNavButton extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(
-                colors: [
-                  colors.peach[400]!,
-                  colors.purple[700]!,
-                ],
+                colors: [colors.peach[400]!, colors.purple[700]!],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
